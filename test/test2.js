@@ -7,7 +7,7 @@ var assert = require('assert');
 var request = require('superagent');
 var spawn = require('child_process').spawn;
 
-var child = spawn('node', [__dirname + '/fixtures/server.js']);
+var child = spawn('node', [__dirname + '/fixtures/server2.js']);
 
 child.stdout.setEncoding('utf8');
 
@@ -19,6 +19,7 @@ child.stdout.once('data', function(data){
     console.log('pass, testing /die');
     request.get('http://localhost:3555/die').end(function(res){
       assert(200 == res.status);
+      assert('hi' == res.text);
       console.log('pass, testing / again');
       setTimeout(function(){
         request.get('http://localhost:3555/').end(function(err, res){
@@ -27,7 +28,11 @@ child.stdout.once('data', function(data){
           console.log('ALL OK');
           console.log();
         });
-      }, 1000);
+      }, 100);
     });
   });
+});
+
+child.on('close', function (code) {
+  assert(1 == code);
 });
