@@ -9,7 +9,9 @@
  *
  */
 
-var html =
+exports = module.exports = die;
+
+exports.html =
   '<html>'
 +   '<head>'
 +     '<meta http-equiv="refresh" content="5;url=/">'
@@ -21,9 +23,13 @@ var html =
 + '</html>'
 ;
 
-module.exports = function(req, res){
-  res.send(html);
+exports.timeout = 500;
+
+exports.kill = process.exit;
+
+function die(req, res){
+  res.send(exports.html);
   setTimeout(function(){
-    process.exit();
-  }, 500);
-};
+    exports.kill();
+  }, exports.timeout);
+}
