@@ -1,5 +1,6 @@
 {
   "name": "express-die",
+  "repo": "stagas/express-die",
   "version": "0.0.1",
   "description": "express handler to kill your node process",
   "keywords": ["express","kill","restart"],
